@@ -8,10 +8,16 @@
 
     <name>eh-swagger</name>
 
+    <organization>
+        <name>eHarmony</name>
+        <url>http://eharmony.com</url>
+    </organization>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <eh-swagger-repository-client-version>1.0.0-SNAPSHOT</eh-swagger-repository-client-version>
     </properties>
+
 
     <dependencies>
         <dependency>
@@ -101,21 +107,24 @@
         <developerConnection>scm:git:git@github.com:eHarmony/eh-swagger.git</developerConnection>
       <tag>HEAD</tag>
   </scm>
-    
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>internal-releases</id>
-			<name>Internal Releases</name>
-			<url>https://repository.corp.eharmony.com/nexus/content/repositories/internal-releases</url>
-			<layout>default</layout>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>internal-snapshots</id>
-			<name>Internal Snapshots</name>
-			<url>https://repository.corp.eharmony.com/nexus/content/repositories/internal-snapshots</url>
-			<layout>default</layout>
-		</snapshotRepository>
-	</distributionManagement>
+
+    <distributionManagement>
+        <!-- use the following if you're not using a snapshot version. -->
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>internal-releases</id>
+            <name>Internal Releases</name>
+            <url>${internal.release.repo}</url>
+            <layout>default</layout>
+        </repository>
+
+        <!-- use the following if you ARE using a snapshot version. -->
+        <snapshotRepository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>internal-snapshots</id>
+            <name>Internal Snapshots</name>
+            <url>${internal.snapshot.repo}</url>
+            <layout>default</layout>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
