@@ -1,4 +1,4 @@
-# Swagger for REST Services
+# EH Swagger  [![Build Status](https://travis-ci.org/eHarmony/eh-swagger.svg?branch=master)](https://travis-ci.org/eHarmony/eh-swagger)
 
 Project for streamlining use of [Swagger](http://swagger.io/) to document REST services, with these goals:
 
@@ -11,12 +11,12 @@ Project for streamlining use of [Swagger](http://swagger.io/) to document REST s
 ### 1. Add this to your pom:
 
 ```xml
-        <!-- Swagger -->
-        <dependency>
-            <groupId>com.eharmony.services</groupId>
-            <artifactId>eh-swagger</artifactId>
-            <version>${eh.swagger.version}</version>
-        </dependency>         
+<!-- Swagger -->
+<dependency>
+    <groupId>com.eharmony.services</groupId>
+    <artifactId>eh-swagger</artifactId>
+    <version>${eh.swagger.version}</version>
+</dependency>         
 ```
 
 *Note* If your pom references the bmx library, make sure you're including version 25 or later of that library, which has a fix for avoiding a runtime problem with Swagger.
@@ -67,10 +67,10 @@ Add more (or fewer) @Tag entries as needed to provide visual groupings for your 
 Add this to your application-context.xml, using your appropriate contextPath or path to your api and the packages containing your resources:
 
 ```xml
-    <bean class="com.eharmony.services.swagger.Swaggerizer">
-        <property name="basePath" value="BASE_PATH_TO_YOUR_API" />
-        <property name="resourcePackage" value="com.eharmony.packages.with.your.resources"/>
-    </bean>
+<bean class="com.eharmony.services.swagger.Swaggerizer">
+    <property name="basePath" value="BASE_PATH_TO_YOUR_API" />
+    <property name="resourcePackage" value="com.eharmony.packages.with.your.resources"/>
+</bean>
 ```
 
 Your packages should include the @SwaggerDefinition class you will be defining.
@@ -81,26 +81,26 @@ The following is an example; change the values accordingly for your service:
 
 ```java
 
-    package com.eharmony.services.communication;
-    
-    import io.swagger.annotations.Info;
-    import io.swagger.annotations.SwaggerDefinition;
-    import io.swagger.annotations.Tag;
-    
-    @SwaggerDefinition(
-            info = @Info(
-                    title = "Communication Service",
-                    version = "V1",
-                    description = "Messages between users in a match"
-            ),
-            tags = {
-                    @Tag(name = "icebreaker", description = "An opening dialog message prompt between users"),
-                    @Tag(name = "nudge", description = "A message prompt sent to encourage another user to upload a photo")
-            }
-            
-    )
-    public interface CommunicationServiceSwaggerConfig {
-    }
+package com.eharmony.services.communication;
+
+import io.swagger.annotations.Info;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
+
+@SwaggerDefinition(
+        info = @Info(
+                title = "Communication Service",
+                version = "V1",
+                description = "Messages between users in a match"
+        ),
+        tags = {
+                @Tag(name = "icebreaker", description = "An opening dialog message prompt between users"),
+                @Tag(name = "nudge", description = "A message prompt sent to encourage another user to upload a photo")
+        }
+        
+)
+public interface CommunicationServiceSwaggerConfig {
+}
 
 ```
 
@@ -122,12 +122,12 @@ public class UserMatchPhotoNudgeResource {
 To provide information beyond what Swagger can determine on its own, you can (and usually should) on each service method make use of @ApiOperation, @ApiResponse, and @ApiParam(s) as in the following: 
 
 ```java
-    @GET 
-    @ApiOperation(value="Return all photo nudges for a match")
-    @ApiResponses(value={@ApiResponse(code=404, message="Invalid match, userId not in match")})
-    public UserWrapper.WithPhotoNudges getPhotoNudgesForMatch(
-            @ApiParam(value="Logged-in user") @PathParam("userId") long userId,
-            @ApiParam(value="Target match") @PathParam("matchId") long matchId) {
+@GET 
+@ApiOperation(value="Return all photo nudges for a match")
+@ApiResponses(value={@ApiResponse(code=404, message="Invalid match, userId not in match")})
+public UserWrapper.WithPhotoNudges getPhotoNudgesForMatch(
+        @ApiParam(value="Logged-in user") @PathParam("userId") long userId,
+        @ApiParam(value="Target match") @PathParam("matchId") long matchId) {
 ```
 
 ## Accessing the Results
