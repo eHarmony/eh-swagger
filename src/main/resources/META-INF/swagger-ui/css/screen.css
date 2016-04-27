@@ -1235,7 +1235,7 @@
   cursor: pointer;
 }
 .swagger-section #header {
-  background-color: #328AA1;
+  background-color: #89bf04;
   padding: 14px;
 }
 .swagger-section #input_baseUrl {
@@ -1282,8 +1282,8 @@
   font-size: 1.5em;
   font-weight: bold;
   text-decoration: none;
-  background: transparent url(http://static.eharmony.com/files/corp/images/flip/logo-white.png) no-repeat left center;  
-  padding: 10px 0 10px 190px;
+  background: transparent url(../images/logo_small.png) no-repeat left center;
+  padding: 10px 0 10px 40px;
   color: white;
 }
 .swagger-section #content_message {
@@ -1301,7 +1301,4 @@
 }
 .swagger-section .swagger-expand:before {
   content: "+";
-}
-.hide-header {
-  display: none;
 }

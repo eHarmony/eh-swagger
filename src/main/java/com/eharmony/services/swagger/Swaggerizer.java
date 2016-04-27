@@ -5,30 +5,62 @@ import io.swagger.converter.ModelConverters;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-
-import com.eharmony.services.swagger.DocumentationRepositoryPublisher;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import java.util.Collections;
 import java.util.List;
 
-@Configuration
+@Service
 public class Swaggerizer {
-    private String basePath = null;
+    protected final static Logger LOG = LoggerFactory.getLogger(Swaggerizer.class);
+
+    private String basePath;
     private Boolean enableRepositoryPublish = false;
-    private String repositoryHost = null;
-    private String category = null;
-    private String environment = null;
-    private String apiHost = null;
-    private String resourcePackage = null;
+    private String repositoryHost;
+    private String category;
+    private String environment;
+    private String apiHost;
+    private String resourcePackage;
+    private String validationUrl;
+    private String theme;
     private List<ModelConverter> converters = Collections.emptyList();
+
+    @Inject
+    public Swaggerizer(ServletContext servletContext) {
+        String contextPath = servletContext.getContextPath();
+        LOG.debug("Detected contextPath={}", contextPath);
+        if (StringUtils.isNotEmpty(contextPath)) {
+            setBasePath(contextPath);
+        }
+
+        // Tell Swagger to scan for classes at or below where (the subclass of) this file lives.
+        String packageName = getClass().getPackage().getName();
+        setResourcePackage(packageName);
+    }
 
     @Bean
     public SwaggerResourceServer classpathServer() {
-        return new SwaggerResourceServer(basePath);
+        SwaggerResourceServer resourceServer = new SwaggerResourceServer();
+
+        if (StringUtils.isNotBlank(basePath)) {
+            resourceServer.setContextPath(basePath);
+        }
+        if (StringUtils.isNotBlank(validationUrl)) {
+            resourceServer.setValidationUrl(validationUrl);
+        }
+        if (StringUtils.isNotBlank(theme)) {
+            resourceServer.setTheme(theme);
+        }
+
+        return resourceServer;
     }
 
     /**
@@ -48,12 +80,18 @@ public class Swaggerizer {
         return bc;
     }
 
-    // Other stuff swagger needs
+    /**
+     * Required by swagger
+     */
     @Bean
     public ApiListingResource apilisting() {
         return new ApiListingResource();
     }
 
+
+    /**
+     * Required by swagger
+     */
     @Bean
     @Scope("singleton")
     public SwaggerSerializers serializer() {
@@ -112,5 +150,13 @@ public class Swaggerizer {
 
     public void setEnvironment(String environment) {
         this.environment = environment;
+    }
+
+    public void setValidationUrl(String validationUrl) {
+        this.validationUrl = validationUrl;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 }
