@@ -45,8 +45,6 @@ public class Swaggerizer {
     private String environment;
     private String apiHost;
     private String resourcePackage;
-    private String validationUrl;
-    private String theme;
     private List<ModelConverter> converters = Collections.emptyList();
 
     @Inject
@@ -60,23 +58,6 @@ public class Swaggerizer {
         // Tell Swagger to scan for classes at or below where (the subclass of) this file lives.
         String packageName = getClass().getPackage().getName();
         setResourcePackage(packageName);
-    }
-
-    @Bean
-    public SwaggerResourceServer classpathServer() {
-        SwaggerResourceServer resourceServer = new SwaggerResourceServer();
-
-        if (StringUtils.isNotBlank(basePath)) {
-            resourceServer.setContextPath(basePath);
-        }
-        if (StringUtils.isNotBlank(validationUrl)) {
-            resourceServer.setValidationUrl(validationUrl);
-        }
-        if (StringUtils.isNotBlank(theme)) {
-            resourceServer.setTheme(theme);
-        }
-
-        return resourceServer;
     }
 
     /**
@@ -166,13 +147,5 @@ public class Swaggerizer {
 
     public void setEnvironment(String environment) {
         this.environment = environment;
-    }
-
-    public void setValidationUrl(String validationUrl) {
-        this.validationUrl = validationUrl;
-    }
-
-    public void setTheme(String theme) {
-        this.theme = theme;
     }
 }

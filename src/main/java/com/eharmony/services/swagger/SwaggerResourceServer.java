@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -47,6 +48,7 @@ import java.util.concurrent.ConcurrentMap;
  * for convenience so the swagger UI is available from the service itself, and services have minimal configuration
  * to set up swagger.
  */
+@Component
 @Path("/swagger-ui")
 public final class SwaggerResourceServer {
     protected final static Logger LOG = LoggerFactory.getLogger(SwaggerResourceServer.class);
@@ -136,14 +138,24 @@ public final class SwaggerResourceServer {
         throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
 
+    @Value("${swagger.resource.context.path:}")
     public void setContextPath(String contextPath) {
-        this.contextPath = contextPath;
+        if (StringUtils.isNotBlank(contextPath)) {
+            this.contextPath = contextPath;
+        }
     }
 
+    @Value("${swagger.theme:}")
     public void setTheme(String theme) {
-        this.themePath = String.format(SWAGGER_THEME_PATH, theme);
+        if (StringUtils.isNotBlank(theme)) {
+            this.themePath = String.format(SWAGGER_THEME_PATH, theme);
+        }
     }
+
+    @Value("${swagger.validator.url:}")
     public void setValidationUrl(String validationUrl) {
-        this.settings = String.format(SWAGGER_SETTINGS_JS, validationUrl);
+        if (StringUtils.isNotBlank(validationUrl)) {
+            this.settings = String.format(SWAGGER_SETTINGS_JS, validationUrl);
+        }
     }
 }
