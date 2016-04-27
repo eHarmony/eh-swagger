@@ -19,7 +19,7 @@ Project for streamlining use of [Swagger](http://swagger.io/) to document REST s
         </dependency>         
 ```
 
-    *Note* If your pom references the bmx library, make sure you're including version 25 or later of that library, which has a fix for avoiding a runtime problem with Swagger.
+*Note* If your pom references the bmx library, make sure you're including version 25 or later of that library, which has a fix for avoiding a runtime problem with Swagger.
 
 ### 2. Configure the dependency with Spring
 
@@ -76,7 +76,8 @@ Add this to your application-context.xml, using your appropriate contextPath or 
 Your packages should include the @SwaggerDefinition class you will be defining.
 
 Add a marker (i.e. has no implementation) Java interface to your source code, e.g. for communication service it would be CommunicationServiceSwaggerConfig.java. 
-    The following is an example; change the values accordingly for your service:
+
+The following is an example; change the values accordingly for your service:
 
 ```java
 
@@ -103,7 +104,7 @@ Add a marker (i.e. has no implementation) Java interface to your source code, e.
 
 ```
 
-    Add more (or fewer) @Tag entries as needed to provide visual groupings for your services, then reference these from your @Api annotations (see example below).
+Add more (or fewer) @Tag entries as needed to provide visual groupings for your services, then reference these from your @Api annotations (see example below).
 
 
 ## Annotating Services
