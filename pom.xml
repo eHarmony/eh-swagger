@@ -96,9 +96,9 @@
     </build>
 
     <scm>
-        <connection>scm:git:git@github.corp.eharmony.com:matching/eh-swagger.git</connection>
-        <url>git@github.corp.eharmony.com:matching/eh-swagger.git</url>
-        <developerConnection>scm:git:git@github.corp.eharmony.com:matching/eh-swagger.git</developerConnection>
+        <connection>scm:git:git@github.com:eHarmony/eh-swagger.git</connection>
+        <url>git@github.com:eHarmony/eh-swagger.git</url>
+        <developerConnection>scm:git:git@github.com:eHarmony/eh-swagger.git</developerConnection>
       <tag>HEAD</tag>
   </scm>
     
