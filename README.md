@@ -4,26 +4,28 @@ Project for streamlining use of [Swagger](http://swagger.io/) to document REST s
 
 1. Simplify swagger configuration for each service.
 2. Enable a self-contained UI endpoint for each service.
-3. Provide common capabilities for eHarmony services (eq. eh-swagger-repository).
+3. Provide common capabilities for eHarmony services (eg. eh-swagger-repository).
 
 ## Configuration
 
-1. If your pom references the bmx library, make sure you're including version 25 or later of that library, which has a fix for avoiding a runtime problem with Swagger.
+### 1. Add this to your pom:
 
-2. Add this to your pom:
-
+```xml
         <!-- Swagger -->
         <dependency>
             <groupId>com.eharmony.services</groupId>
             <artifactId>eh-swagger</artifactId>
             <version>${eh.swagger.version}</version>
         </dependency>         
+```
 
-3. Configure the dependency with Spring
+    *Note* If your pom references the bmx library, make sure you're including version 25 or later of that library, which has a fix for avoiding a runtime problem with Swagger.
+
+### 2. Configure the dependency with Spring
 
 There are two options
 
-3a. Use component scan
+#### 2a. Use component scan
 
 Add a java file in your source code that is
   * within a spring component-scan directory, and
@@ -57,23 +59,27 @@ import io.swagger.annotations.Tag;
 public class CommunicationServiceSwaggerConfig extends Swaggerizer {
 }
 ```
+
 Add more (or fewer) @Tag entries as needed to provide visual groupings for your services, then reference these from your @Api annotations (see example below).
 
-3b. XML Configuration
+#### 2b. XML Configuration
 
 Add this to your application-context.xml, using your appropriate contextPath or path to your api and the packages containing your resources:
-    ```xml
-    <!-- Swagger -->
+
+```xml
     <bean class="com.eharmony.services.swagger.Swaggerizer">
         <property name="basePath" value="BASE_PATH_TO_YOUR_API" />
         <property name="resourcePackage" value="com.eharmony.packages.with.your.resources"/>
     </bean>
-    ```
-    Your packages should include the @SwaggerDefinition class you will be defining.
+```
+
+Your packages should include the @SwaggerDefinition class you will be defining.
 
 Add a marker (i.e. has no implementation) Java interface to your source code, e.g. for communication service it would be CommunicationServiceSwaggerConfig.java. 
     The following is an example; change the values accordingly for your service:
-    ```java
+
+```java
+
     package com.eharmony.services.communication;
     
     import io.swagger.annotations.Info;
@@ -94,7 +100,9 @@ Add a marker (i.e. has no implementation) Java interface to your source code, e.
     )
     public interface CommunicationServiceSwaggerConfig {
     }
-    ```
+
+```
+
     Add more (or fewer) @Tag entries as needed to provide visual groupings for your services, then reference these from your @Api annotations (see example below).
 
 
