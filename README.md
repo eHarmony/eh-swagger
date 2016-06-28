@@ -1,5 +1,6 @@
 # EH Swagger  [![Build Status](https://travis-ci.org/eHarmony/eh-swagger.svg?branch=master)](https://travis-ci.org/eHarmony/eh-swagger)
 
+
 Project for streamlining use of [Swagger](http://swagger.io/) to document REST services, with these goals:
 
 1. Simplify swagger configuration for each service.
