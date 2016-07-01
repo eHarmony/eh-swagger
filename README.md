@@ -173,3 +173,81 @@ Add these properties to your Swaggerizer bean:
     <property name="validationUrl" value="${swagger.validator.url}"/>
 ```
 
+## Jersey 2 / Jetty 9
+
+Configuration for jersey 2 is slightly different. 
+
+### User <version>-jersey2 version in the pom
+
+eg:
+
+```xml
+<!-- Swagger -->
+<dependency>
+    <groupId>com.eharmony.services</groupId>
+    <artifactId>eh-swagger</artifactId>
+    <version>2.0.0-jersey2</version>
+</dependency>         
+```
+
+### Use component scan for autowiring different Swagger beans
+
+In the application context add the swagger package to your base packages:
+
+
+```xml             
+  <context:annotation-config />
+  <context:component-scan base-package="com.eharmony.services.swagger" />
+```
+
+### Update web.xml with Swagger providers
+
+The provider packages in the web.xml under the Jersey servlet container need to include swagger:
+
+```xml
+    <servlet>
+        <servlet-name>jersey</servlet-name>
+        <servlet-class>
+            org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>        
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.eharmony.services.swagger,io.swagger.jaxrs.listing</param-value>
+        </init-param>
+    </servlet>
+```
+
+### Use properties for theme and validator
+
+For the theme and validator, they are autowired into the Swagger Resource, instead of being manually configured. Set the following properties in your properties file to set them:
+
+```
+swagger.validator.url=http://someservice.com/api/validator
+swagger.theme=your_theme
+```
+
+## Known Issues
+
+### Hibernate
+
+For some versions of hibernate, when starting up a service after adding eh-swagger, you will get the following error:
+
+```
+Caused by: javax.validation.ValidationException: Unable to create a Configuration, because no Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+```
+
+This can be resolved by excluding validation-api from eh-swagger:
+
+```xml
+<!-- Swagger -->
+<dependency>
+    <groupId>com.eharmony.services</groupId>
+    <artifactId>eh-swagger</artifactId>
+    <version>${eh.swagger.version}</version>
+    <exclusions>
+        <exclusion>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>         
+```
