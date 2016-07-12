@@ -27,15 +27,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.ServletContextAware;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import java.util.Collections;
 import java.util.List;
 
 @Service
-public class Swaggerizer {
+public class Swaggerizer implements ServletContextAware {
     protected final static Logger LOG = LoggerFactory.getLogger(Swaggerizer.class);
 
     private String basePath;
@@ -47,14 +47,7 @@ public class Swaggerizer {
     private String resourcePackage;
     private List<ModelConverter> converters = Collections.emptyList();
 
-    @Inject
-    public Swaggerizer(ServletContext servletContext) {
-        String contextPath = servletContext.getContextPath();
-        LOG.debug("Detected contextPath={}", contextPath);
-        if (StringUtils.isNotEmpty(contextPath)) {
-            setBasePath(contextPath);
-        }
-
+    public Swaggerizer() {
         // Tell Swagger to scan for classes at or below where (the subclass of) this file lives.
         String packageName = getClass().getPackage().getName();
         setResourcePackage(packageName);
@@ -147,5 +140,14 @@ public class Swaggerizer {
 
     public void setEnvironment(String environment) {
         this.environment = environment;
+    }
+
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        String contextPath = servletContext.getContextPath();
+        LOG.debug("Detected contextPath={}", contextPath);
+        if (StringUtils.isNotEmpty(contextPath)) {
+            setBasePath(contextPath);
+        }
     }
 }
