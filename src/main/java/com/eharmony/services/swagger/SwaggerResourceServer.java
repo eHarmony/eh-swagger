@@ -91,7 +91,11 @@ public final class SwaggerResourceServer {
             cp = request.getContextPath();
         }
 
-        String loc = "swagger-ui/index.html?url=" + cp + "/swagger.json";
+        if (!cp.endsWith("/")) {
+            cp += "/";
+        }
+
+        String loc = "swagger-ui/index.html?url=" + cp + "swagger.json";
 
         String queryString = request.getQueryString();
         if (StringUtils.isNotBlank(queryString)) {
