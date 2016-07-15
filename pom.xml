@@ -3,7 +3,7 @@
 
     <groupId>com.eharmony.services</groupId>
     <artifactId>eh-swagger</artifactId>
-    <version>2.0.0-jersey3-SNAPSHOT</version>
+    <version>2.0.1-jersey2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>eh-swagger</name>
