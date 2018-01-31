@@ -58,6 +58,8 @@ public final class SwaggerResourceServer {
     private String contextPath;
     private String themePath;
     private String settings;
+    private static final String DEFAULT_THEME = "swagger";
+    private static final String DEFAULT_VALIDATOR = "http://online.swagger.io/validator/debug";
     private static final String SWAGGER_UI_PATH = "classpath*:META-INF/swagger-ui/%s";
     private static final String SWAGGER_THEME_PATH = "theme/%s";
     private static final String SWAGGER_SETTINGS_JS = "$(function () {\n" +
@@ -66,19 +68,8 @@ public final class SwaggerResourceServer {
             "});";
 
     public SwaggerResourceServer() {
-        Properties properties = new Properties();
-
-        try {
-            properties.load(getClass().getResourceAsStream("/eh-swagger.properties"));
-            String validationUrl = properties.getProperty("swagger.validator.url",
-                    "http://online.swagger.io/validator/debug");
-            String theme = properties.getProperty("swagger.theme", "swagger");
-            setTheme(theme);
-            setValidationUrl(validationUrl);
-        } catch (IOException e) {
-            LOG.error("Unable to locate eh-swagger.properties in the classpath");
-            throw new RuntimeException("Unable to load eh-swagger without eh-swagger.properties");
-        }
+        setTheme(DEFAULT_THEME);
+        setValidationUrl(DEFAULT_VALIDATOR);
     }
 
     /**
