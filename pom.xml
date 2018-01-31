@@ -3,7 +3,7 @@
 
     <groupId>com.eharmony.services</groupId>
     <artifactId>eh-swagger</artifactId>
-    <version>2.0.2-jersey2-SNAPSHOT</version>
+    <version>2.0.2-jersey2</version>
     <packaging>jar</packaging>
 
     <name>eh-swagger</name>
@@ -112,7 +112,7 @@
         <connection>scm:git:git@github.com:eHarmony/eh-swagger.git</connection>
         <url>git@github.com:eHarmony/eh-swagger.git</url>
         <developerConnection>scm:git:git@github.com:eHarmony/eh-swagger.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>eh-swagger-2.0.2-jersey2</tag>
   </scm>
 
 </project>
